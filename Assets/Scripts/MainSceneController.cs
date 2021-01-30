@@ -7,9 +7,11 @@ using UnityEngine.UI;
 
 public class MainSceneController : MonoBehaviour
 {
+    [SerializeField] private MainUIController mainUIController;
+    
     [SerializeField] private GameObject fieldElementPrefab;
     [SerializeField] private GameObject fieldElementsParent;
-    [FormerlySerializedAs("spriteRenderer")] [SerializeField] private Sprite sprite;
+    [SerializeField] private Sprite sprite;
 
     [SerializeField] [Range(2,10)] private int fieldWidth = 10;
     [SerializeField] [Range(2,10)] private int fieldHeight = 10;
@@ -18,10 +20,12 @@ public class MainSceneController : MonoBehaviour
     private Vector2 _spriteShift;
 
     private ILettersField _lettersField;
+
+    public static Action startButtonClicked;
     
     private void Start()
     {
-        MainInit();
+        //MainInit();
     }
 
     private void Update()
@@ -43,10 +47,23 @@ public class MainSceneController : MonoBehaviour
         _lettersField.CreateField();
         _lettersField.LettersFieldInit();
     }
-    
+
+    public void StartChosenMode()
+    {
+        OnStartButtonClicked();
+        MainInit();
+    }
+
+    private void OnStartButtonClicked()
+    {
+        startButtonClicked?.Invoke();
+    }
+
     private Vector2 GetSpriteShift()
     {
         var bounds = sprite.bounds;
         return new Vector2(bounds.extents.x, bounds.extents.y);
     }
+    
+   
 }

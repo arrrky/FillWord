@@ -3,25 +3,25 @@ using UnityEngine.Serialization;
 
 public class Field : MonoBehaviour, IField
 {
-    private GameObject fieldElementPrefab;
-    private GameObject fieldElementsParent;
+    private GameObject _fieldElementPrefab;
+    private GameObject _fieldElementsParent;
     
-    protected GameObject[,] field;
+    protected GameObject[,] ObjectsField;
     public int Width { get; set; }
     public int Height { get; set; }
-    public Vector2Int StartPosition { get; set; }
-    public Vector2 SpriteShift { get; set; }
+    private Vector2Int StartPosition { get; set; }
+    private Vector2 SpriteShift { get; set; }
 
     public void FieldInit(int width, int height, Vector2Int startPosition, Vector2 spriteShift, GameObject prefab, GameObject prefabsParent)
     {
         Width = width;
         Height = height;
-        field = new GameObject[width, height];
+        ObjectsField = new GameObject[width, height];
 
         StartPosition = startPosition;
         SpriteShift = spriteShift;
-        this.fieldElementPrefab = prefab;
-        this.fieldElementsParent = prefabsParent;
+        this._fieldElementPrefab = prefab;
+        this._fieldElementsParent = prefabsParent;
         
         CreateField();
     }
@@ -32,13 +32,13 @@ public class Field : MonoBehaviour, IField
         {
             for (int y = 0; y < Height; y++)
             {
-                GameObject newCell =  Instantiate(fieldElementPrefab, fieldElementsParent.transform);
+                GameObject newCell =  Instantiate(_fieldElementPrefab, _fieldElementsParent.transform);
 
                 newCell.transform.position = new Vector3(
                     StartPosition.x + SpriteShift.x + x,
                     StartPosition.y + SpriteShift.y + y);
 
-                field[x, y] = newCell;
+                ObjectsField[x, y] = newCell;
             }
         }
     }
