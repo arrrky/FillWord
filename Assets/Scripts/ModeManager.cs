@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public enum Mode
 {
-    Create = 0,
-    Play = 1,
+    MainMenu = 0,
+    Create = 1,
+    Play = 2,
 }
 
 public class ModeManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class ModeManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            chosenMode = Mode.Create;
             DontDestroyOnLoad(this);
         }
         else

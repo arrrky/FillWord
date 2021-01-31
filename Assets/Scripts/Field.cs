@@ -9,10 +9,10 @@ public class Field : MonoBehaviour, IField
     protected GameObject[,] ObjectsField;
     public int Width { get; set; }
     public int Height { get; set; }
-    private Vector2Int StartPosition { get; set; }
+    private Vector3 StartPosition { get; set; }
     private Vector2 SpriteShift { get; set; }
 
-    public void FieldInit(int width, int height, Vector2Int startPosition, Vector2 spriteShift, GameObject prefab, GameObject prefabsParent)
+    public void FieldInit(int width, int height, Vector3 startPosition, Vector2 spriteShift, GameObject prefab, GameObject prefabsParent)
     {
         Width = width;
         Height = height;
@@ -22,8 +22,6 @@ public class Field : MonoBehaviour, IField
         SpriteShift = spriteShift;
         this._fieldElementPrefab = prefab;
         this._fieldElementsParent = prefabsParent;
-        
-        CreateField();
     }
 
     public void CreateField()

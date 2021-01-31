@@ -2,13 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
-public class MainSceneController : MonoBehaviour
+public class CreateModeController : MonoBehaviour
 {
-    [SerializeField] private MainUIController mainUIController;
-    
     [SerializeField] private GameObject fieldElementPrefab;
     [SerializeField] private GameObject fieldElementsParent;
     [SerializeField] private Sprite sprite;
@@ -16,16 +12,15 @@ public class MainSceneController : MonoBehaviour
     [SerializeField] [Range(2,10)] private int fieldWidth = 10;
     [SerializeField] [Range(2,10)] private int fieldHeight = 10;
 
-    private Vector2Int _startPosition;
+    private Vector3 _startPosition;
     private Vector2 _spriteShift;
 
     private ILettersField _lettersField;
 
-    public static Action startButtonClicked;
-    
     private void Start()
     {
-        //MainInit();
+        _spriteShift = GetSpriteShift();
+        MainInit();
     }
 
     private void Update()
@@ -40,30 +35,17 @@ public class MainSceneController : MonoBehaviour
     {
         _lettersField = gameObject.AddComponent<LettersField>();
         
-        _startPosition = new Vector2Int(- fieldWidth / 2, - fieldHeight / 2);
-        _spriteShift = GetSpriteShift();
+        Vector3 screenBounds = MiscTools.GetScreenBounds();
+        _startPosition = new Vector3(screenBounds.x / 2 - fieldWidth / 2 - _spriteShift.x, -screenBounds.y + 1, 0);
 
         _lettersField.FieldInit(fieldWidth, fieldHeight, _startPosition, _spriteShift, fieldElementPrefab, fieldElementsParent);
         _lettersField.CreateField();
         _lettersField.LettersFieldInit();
     }
-
-    public void StartChosenMode()
-    {
-        OnStartButtonClicked();
-        MainInit();
-    }
-
-    private void OnStartButtonClicked()
-    {
-        startButtonClicked?.Invoke();
-    }
-
+    
     private Vector2 GetSpriteShift()
     {
         var bounds = sprite.bounds;
         return new Vector2(bounds.extents.x, bounds.extents.y);
     }
-    
-   
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class MainUIController : MonoBehaviour
+public class MainMenuUIController : MonoBehaviour
 {
    [SerializeField] private GameObject mainSceneUIGroup;
    
@@ -17,7 +17,7 @@ public class MainUIController : MonoBehaviour
 
    private void OnEnable()
    {
-      MainSceneController.startButtonClicked += HideMainSceneUI;
+      MainMenuController.startButtonClicked += HideMainSceneUI;
    }
 
    private void Start()
@@ -37,6 +37,6 @@ public class MainUIController : MonoBehaviour
 
    private void OnDisable()
    {
-      MainSceneController.startButtonClicked -= HideMainSceneUI;
+      MainMenuController.startButtonClicked -= HideMainSceneUI;
    }
 }
