@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -10,8 +11,11 @@ public class LettersField : Field, ILettersField
     
     public Text[,] Letters { get; set; }
 
-    public void LettersFieldInit()
+    public override void Init(int width, int height, Vector3 startPosition, Vector2 spriteShift, GameObject prefab,
+        GameObject prefabsParent)
     {
+        base.Init(width, height, startPosition, spriteShift, prefab, prefabsParent);
+
         Letters = new Text[Width,Height];
         
         for (int x = 0; x < Width; x++)
@@ -34,4 +38,21 @@ public class LettersField : Field, ILettersField
             }
         }
     }
+
+    // Простое заполнение слева направо, сверху вниз
+    public void FillLetterField(List<char> letters)
+    {
+        int lettersCount = 0;
+        
+        for (int y = Height - 1; y >= 0; y--)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                Letters[x, y].text = letters[lettersCount].ToString();
+                lettersCount++;
+            }
+        }
+    }
+    
+    
 }

@@ -12,7 +12,7 @@ public class Field : MonoBehaviour, IField
     private Vector3 StartPosition { get; set; }
     private Vector2 SpriteShift { get; set; }
 
-    public void FieldInit(int width, int height, Vector3 startPosition, Vector2 spriteShift, GameObject prefab, GameObject prefabsParent)
+    public virtual void Init(int width, int height, Vector3 startPosition, Vector2 spriteShift, GameObject prefab, GameObject prefabsParent)
     {
         Width = width;
         Height = height;
@@ -20,8 +20,10 @@ public class Field : MonoBehaviour, IField
 
         StartPosition = startPosition;
         SpriteShift = spriteShift;
-        this._fieldElementPrefab = prefab;
-        this._fieldElementsParent = prefabsParent;
+        _fieldElementPrefab = prefab;
+        _fieldElementsParent = prefabsParent;
+        
+        CreateField();
     }
 
     public void CreateField()

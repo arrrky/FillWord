@@ -6,33 +6,42 @@ using UnityEngine.UI;
 
 public class CreateModeUIController : MonoBehaviour
 {
-   [SerializeField] private Text lblLettersCount;
-   [SerializeField] private Text lblCreate;
+    [SerializeField] private Button btnCreate;
+
+    [SerializeField] private Text lblLettersCount;
+    [SerializeField] private Text lblCreate;
 
 
-   private void OnEnable()
-   {
-       InputFieldsController.LetterCountUpdated += UpdateLettersCountOnUI;
-   }
+    private void OnEnable()
+    {
+        InputFieldsController.LetterCountUpdated += UpdateLettersCountOnUI;
+        InputFieldsController.LetterCountReachedMax += MakeCreateButtonInteractable;
+    }
 
-   private void Start()
-   {
-     CreateModeUIInit();
-   }
+    private void Start()
+    {
+        CreateModeUIInit();
+    }
 
-   private void CreateModeUIInit()
-   {
-      lblLettersCount.text = "Letters count: ";
-      lblCreate.text = "Create";
-   }
+    private void CreateModeUIInit()
+    {
+        lblLettersCount.text = "Letters count: ";
+        lblCreate.text = "Create";
+    }
 
-   private void UpdateLettersCountOnUI()
-   {
-       lblLettersCount.text = $"Letters count: {InputFieldsController.lettersCount}";
-   }
-   
-   private void OnDisable()
-   {
-       InputFieldsController.LetterCountUpdated -= UpdateLettersCountOnUI;
-   }
+    private void UpdateLettersCountOnUI()
+    {
+        lblLettersCount.text = $"Letters count: {InputFieldsController.LettersCount}";
+    }
+
+    private void MakeCreateButtonInteractable()
+    {
+        btnCreate.interactable = true;
+    }
+
+    private void OnDisable()
+    {
+        InputFieldsController.LetterCountUpdated -= UpdateLettersCountOnUI;
+        InputFieldsController.LetterCountReachedMax -= MakeCreateButtonInteractable;
+    }
 }

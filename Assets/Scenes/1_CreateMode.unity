@@ -3456,6 +3456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31638ab40a27afc45ae25f83f190258c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btnCreate: {fileID: 2085402966}
   lblLettersCount: {fileID: 909041543}
   lblCreate: {fileID: 624019747}
 --- !u!1 &1247908060
@@ -5930,12 +5931,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086683f155a049043913e2557438699d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputFieldsController: {fileID: 1803263521}
   fieldElementPrefab: {fileID: 194461479271404849, guid: ae14ba8af5e1100438454de28cba08ec,
     type: 3}
   fieldElementsParent: {fileID: 1875277161}
   sprite: {fileID: 21300000, guid: f2e375dda8388584aa8db539b2789d07, type: 3}
   fieldWidth: 10
   fieldHeight: 10
+  letters: 
 --- !u!4 &1875277163
 Transform:
   m_ObjectHideFlags: 0
@@ -6796,7 +6799,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2085402967}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1875277162}
+        m_MethodName: FillLetterField
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2085402967
 MonoBehaviour:
   m_ObjectHideFlags: 0

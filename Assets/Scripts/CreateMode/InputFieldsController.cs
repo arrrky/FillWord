@@ -8,31 +8,35 @@ public class InputFieldsController : MonoBehaviour
 {
     [SerializeField] private List<InputField> inputFields;
 
-    public static int lettersCount = 0;
+    public static int LettersCount = 0;
     private const int LettersLimit = 100;
 
     public static Action LetterCountUpdated;
-
-    void Start()
-    {
-      
-    }
+    public static Action LetterCountReachedMax;
 
     public void UpdateLetterCount()
     {
-        lettersCount = 0;
+        LettersCount = 0;
+        
         foreach (InputField inputField in inputFields)
         {
-            lettersCount += inputField.text.Length;
+            LettersCount += inputField.text.Length;
         }
         OnLetterCountUpdated();
 
-        if (lettersCount == LettersLimit)
+        // TODO - оставить поля интерактивными, но не давать набирать еще символы (но разрешить удалять) - через отдельный ограничивающий скрипт?
+        if (LettersCount == LettersLimit)
         {
             foreach (InputField inputField in inputFields)
             {
                 inputField.interactable = false;
             }
+            
+            OnLetterCountReachedMax();
+        }
+        else
+        {
+            
         }
     }
 
@@ -40,6 +44,21 @@ public class InputFieldsController : MonoBehaviour
     {
         LetterCountUpdated?.Invoke();
     }
-
     
+    private void OnLetterCountReachedMax()
+    {
+        LetterCountReachedMax?.Invoke();
+    }
+
+    public List<string> GetAllWords()
+    {
+        List<string> result = new List<string>();
+        
+        foreach (InputField inputField in inputFields)
+        {
+           result.Add(inputField.text);
+        }
+
+        return result;
+    }
 }
