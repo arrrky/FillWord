@@ -14,8 +14,8 @@ public class CreateModeUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        InputFieldsController.LetterCountUpdated += UpdateLettersCountOnUI;
-        InputFieldsController.LetterCountReachedMax += MakeCreateButtonInteractable;
+        LettersCountController.LettersCountUpdated += UpdateLettersCountOnUI;
+        LettersCountController.LettersCountReachedMax += MakeCreateButtonInteractable;
     }
 
     private void Start()
@@ -31,7 +31,7 @@ public class CreateModeUIController : MonoBehaviour
 
     private void UpdateLettersCountOnUI()
     {
-        lblLettersCount.text = $"Letters count: {InputFieldsController.LettersCount}";
+        lblLettersCount.text = $"Letters count: {LettersCountController.LettersCount}";
     }
 
     private void MakeCreateButtonInteractable()
@@ -41,7 +41,7 @@ public class CreateModeUIController : MonoBehaviour
 
     private void OnDisable()
     {
-        InputFieldsController.LetterCountUpdated -= UpdateLettersCountOnUI;
-        InputFieldsController.LetterCountReachedMax -= MakeCreateButtonInteractable;
+        LettersCountController.LettersCountUpdated -= UpdateLettersCountOnUI;
+        LettersCountController.LettersCountReachedMax -= MakeCreateButtonInteractable;
     }
 }

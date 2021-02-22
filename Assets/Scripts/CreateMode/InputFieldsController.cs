@@ -6,59 +6,94 @@ using UnityEngine.UI;
 
 public class InputFieldsController : MonoBehaviour
 {
-    [SerializeField] private List<InputField> inputFields;
+    [SerializeField] private List<MyInputField> inputFields;
 
-    public static int LettersCount = 0;
-    private const int LettersLimit = 100;
-
-    public static Action LetterCountUpdated;
-    public static Action LetterCountReachedMax;
-
-    public void UpdateLetterCount()
+    private void OnEnable()
     {
-        LettersCount = 0;
-        
-        foreach (InputField inputField in inputFields)
-        {
-            LettersCount += inputField.text.Length;
-        }
-        OnLetterCountUpdated();
+        LettersCountController.LettersCountReachedMax += LockAllInputFields;
+    }
 
-        // TODO - оставить поля интерактивными, но не давать набирать еще символы (но разрешить удалять) - через отдельный ограничивающий скрипт?
-        if (LettersCount == LettersLimit)
+    private void Start()
+    {
+        inputFields[0].Select();
+    }
+
+    public int GetInputFieldsSymbolsCount()
+    {
+        int result = 0;
+
+        foreach (MyInputField inputField in inputFields)
         {
-            foreach (InputField inputField in inputFields)
-            {
-                inputField.interactable = false;
-            }
-            
-            OnLetterCountReachedMax();
+            result += inputField.text.Length;
         }
-        else
+
+        return result;
+    }
+
+    // Костыль, но пока так
+    // TODO - придумать лучший способ
+    public void LockAllInputFields()
+    {
+        foreach (MyInputField inputField in inputFields)
         {
-            
+            inputField.interactable = false;
         }
     }
 
-    private void OnLetterCountUpdated()
+    public void UnlockAllInputFields()
     {
-        LetterCountUpdated?.Invoke();
-    }
-    
-    private void OnLetterCountReachedMax()
-    {
-        LetterCountReachedMax?.Invoke();
+        foreach (MyInputField inputField in inputFields)
+        {
+            inputField.interactable = true;
+        }
     }
 
     public List<string> GetAllWords()
     {
         List<string> result = new List<string>();
-        
-        foreach (InputField inputField in inputFields)
+
+        foreach (MyInputField inputField in inputFields)
         {
-           result.Add(inputField.text);
+            result.Add(inputField.text);
         }
 
         return result;
+    }
+
+    public void TabBetweenInputFields()
+    {
+        MyInputField selectedInputField = FindSelectedInputField();
+
+        int indexOfSelectedInputField = inputFields.IndexOf(selectedInputField);
+
+        if (selectedInputField != null)
+        {
+            if (indexOfSelectedInputField == inputFields.Count - 1)
+            {
+                inputFields[0].Select();
+            }
+            else
+            {
+                inputFields[indexOfSelectedInputField + 1].Select();
+            }
+        }
+    }
+
+    private MyInputField FindSelectedInputField()
+    {
+        foreach (MyInputField inputField in inputFields)
+        {
+            if (inputField.isFocused)
+            {
+                return inputField;
+            }
+        }
+
+        return null;
+    }
+    
+    private void OnDisable()
+    {
+        LettersCountController.LettersCountReachedMax -= LockAllInputFields;
     }
 }

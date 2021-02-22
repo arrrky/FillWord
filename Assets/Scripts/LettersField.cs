@@ -39,7 +39,7 @@ public class LettersField : Field, ILettersField
         }
     }
 
-    // Простое заполнение слева направо, сверху вниз
+    // Простое заполнение слева направо, сверху вниз - работает как кал
     public void FillLetterField(List<char> letters)
     {
         int lettersCount = 0;
